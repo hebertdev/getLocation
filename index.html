@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>google maps</title>
+
+	<style>
+		*{
+			margin:0;
+			padding: 0;
+		}
+			</style>
+</head>
+<body>
+
+	<button onclick="go()">Obtener Ubicación</button>
+	<div id="google_canvas" style="height: 100vh;
+			width: 100%;
+			position: absolute;">
+
+
+	</div>
+	
+
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAo5YsQNbnItBu9n0IbNjUNNVuSNOJ0uA"></script>
+	<script>
+		function go(){
+			if(!!navigator.geolocation){
+				var map;
+				var mapOptions = {
+					zoom:10,
+					mapTypeId:google.maps.MapTypeId.ROADMAP
+				};
+
+				map =  new google.maps.Map(document.getElementById('google_canvas'), mapOptions);
+				navigator.geolocation.getCurrentPosition(function(position){
+					var geolocate = new google.maps.LatLng(position.coords.latitude , position.coords.longitude);
+					var infoWindow = new google.maps.InfoWindow({
+						map:map,
+						position:geolocate,
+						content:
+							'<h1>esta es tu ubicación</h1>' + 
+							'<h2>Latitud: '+ position.coords.latitude+ ' </h2>' + 
+							'<h2>Longitud: '+ position.coords.longitude+ ' </h2>' 
+					});
+					map.setCenter(geolocate)
+				})
+
+			}
+			else{
+				alert('no tiens maps')
+			}
+		}
+
+
+	</script>
+</body>
+</html>
